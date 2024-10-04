@@ -60,30 +60,4 @@ object NotificationHandler {
             notificationManager.notify(1, notification)
         }
     }
-
-    /*private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                "geofence_channel",
-                "Geofence Notifications",
-                NotificationManager.IMPORTANCE_HIGH
-            ).apply {
-                description = "Channel for geofence notifications"
-            }
-            notificationManager.createNotificationChannel(channel)
-        }
-    }*/
-
-    /*fun NotificationManager.createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                "geofence_channel",
-                "Geofence Notifications",
-                NotificationManager.IMPORTANCE_HIGH
-            ).apply {
-                description = "Channel for geofence notifications"
-            }
-            createNotificationChannel(channel)
-        }
-    }*/
 }

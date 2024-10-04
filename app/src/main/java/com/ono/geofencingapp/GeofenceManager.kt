@@ -10,7 +10,6 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
-import com.google.android.gms.tasks.Task
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +27,6 @@ class GeofenceManager @Inject constructor(
         try {
             previousLocation?.let { removeGeofence(it.locationId) }
 
-
             val geofence = Geofence.Builder()
                 .setRequestId(location.locationId)
                 .setCircularRegion(location.latitude, location.longitude, 100f)
@@ -43,15 +41,11 @@ class GeofenceManager @Inject constructor(
 
             val geofencePendingIntent = getGeofencePendingIntent()
 
-            // Check location permission
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 throw SecurityException("Location permission not granted")
             }
 
-            // Add geofence asynchronously
             val task = geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent)
-
-            // Use a CompletableDeferred to await the result
             val deferredResult = CompletableDeferred<Result<String>>()
 
             task.addOnSuccessListener {
@@ -60,15 +54,11 @@ class GeofenceManager @Inject constructor(
             }.addOnFailureListener { e ->
                 deferredResult.complete(Result.failure(e))
             }
-
-            // Await the result of the CompletableDeferred
             return@withContext deferredResult.await()
 
         } catch (e: SecurityException) {
-            // Handle security exceptions separately
             return@withContext Result.failure(e)
         } catch (e: Exception) {
-            // Handle general exceptions
             return@withContext Result.failure(e)
         }
     }

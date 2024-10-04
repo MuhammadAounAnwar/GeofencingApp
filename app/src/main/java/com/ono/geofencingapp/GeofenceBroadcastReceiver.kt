@@ -11,7 +11,6 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
     private var entryTime: Long = 0
     private var exitTime: Long = 0
-    private var message = ""
 
     override fun onReceive(context: Context?, intent: Intent?) {
         intent?.let {
@@ -26,8 +25,6 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 Geofence.GEOFENCE_TRANSITION_ENTER -> {
                     entryTime = System.currentTimeMillis()
                     Log.d("Geofencing", "Entered geofence at: $entryTime")
-
-//                    NotificationHandler.sendNotification(context, geofenceTransition, message)
                 }
 
                 Geofence.GEOFENCE_TRANSITION_EXIT -> {
@@ -36,9 +33,6 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
                     Log.d("Geofencing", "Exited geofence at: $exitTime")
                     Log.d("Geofencing", "Dwell time in milliseconds: $dwellTime")
-
-//                    NotificationHandler.sendNotification(context, geofenceTransition, message)
-//                    NotificationHandler.sendNotification(context, geofenceTransition, message)
                 }
 
                 else -> {
